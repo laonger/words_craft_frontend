@@ -1,19 +1,24 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+      <WordsCraft ></WordsCraft>
+      <WebSocketTest></WebSocketTest>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+    import Vue from "vue";
+    import VueNativeSock from 'vue-native-websocket';
+    Vue.use(VueNativeSock, "ws://127.0.0.1:9999", { connectManually: true });
+    import WordsCraft from './components/WordsCraft.vue';
+    import WebSocketTest from "./components/WebSocketTest.vue";
 
-export default {
-  name: 'app',
-  components: {
-    HelloWorld
-  }
-}
+    export default {
+      name: 'app',
+      components: {
+          WordsCraft,
+          WebSocketTest
+      }
+    }
 </script>
 
 <style>
