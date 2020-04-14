@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div id="WebSocketTest">
+        aaaaaaaa
         <button id="connect"  v-on:click="connect()" type="submit">connect</button>
         <button id="disconnect" v-on:click="disconnect()" type="submit">disconnect</button>
         <button id="send" v-on:click="send()" type="submit">send</button>
@@ -7,26 +8,20 @@
 </template>
 
 <script>
-    import WS from "../api/WebSocket.js";
-    let ws = "";
-    
     export default{
         name: 'WebSocketTest',
         methods: {
             connect(){
-                ws.connect();
+                this.$root.ws.connect();
             },
             disconnect(){
-                ws.disconnect();
+                this.$root.ws.disconnect();
             },
             onDisconnect(){
             },
             send(){
-                ws.send({'a': 'aaaa'});
+                this.$root.ws.send({'a': 'aaaa'});
             }
-        },
-        mounted(){
-            ws = new WS(this);
         }
 
     }

@@ -1,23 +1,30 @@
 <template>
   <div id="app">
+      <router-link to='/game/'>WordsCraft</router-link><br/>
+      <router-link to='/test/'>WebSocketTest</router-link>
+      <router-link to='/login/'>Login</router-link>
+      <router-view></router-view>
+      <!--
       <WordsCraft ></WordsCraft>
-      <WebSocketTest></WebSocketTest>
+      <component :is="componentId"></component>
+      -->
   </div>
 </template>
 
 <script>
-    import Vue from "vue";
-    import VueNativeSock from 'vue-native-websocket';
-    Vue.use(VueNativeSock, "ws://127.0.0.1:9999", { connectManually: true });
-    import WordsCraft from './components/WordsCraft.vue';
-    import WebSocketTest from "./components/WebSocketTest.vue";
+    
 
     export default {
-      name: 'app',
-      components: {
-          WordsCraft,
-          WebSocketTest
-      }
+        name: 'app',
+        data() {return {
+            //componentId: 'WebSocketTest',
+        }},
+        components: {
+            //WordsCraft,
+            //WebSocketTest
+        },
+        mounted(){
+        }
     }
 </script>
 

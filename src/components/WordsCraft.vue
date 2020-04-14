@@ -1,5 +1,5 @@
 <template>
-    <div id="main">
+    <div id="words_craft">
         <div id="own">
             <div id="own_name"             > {{ own_name  }} </div >
             <div id="own_score"            > {{ own_score }} </div >
@@ -21,44 +21,44 @@
 </template>
 
 <script>
-    import testData from '../TestData.vue';
+
+    import { mapState } from "vuex";
 
     const TIME_COUNT = 10;
-    let word_num = 0;
     
-    let tstData = testData.data();
-
     export default{
         name: 'WordsCraft',
         data() {
             return {
-                own_name: tstData.players.own.name,
-                own_score: 0,
                 time_countdown: TIME_COUNT,
-                word_num: word_num,
-                question_amount: tstData.words.length,
-                other_name: tstData.players.other.name,
-                other_score: 0,
-                word: tstData.words[word_num].word,
-                answer: tstData.words[word_num].chinese
             }
         },
         methods: {
             clickAnswer(answer_num){
-                if (answer_num == tstData.words[this.word_num].answer){
-                    this.time_countdown = TIME_COUNT;
-                    this.word_num = 1;
-                    this.own_score +=10;
-                    this.word = tstData.words[this.word_num].word;
-                    this.answer = Object.assign([], this.answer, tstData.words[this.word_num].chinese);
+                if (answer_num == 0){
+                    //this.time_countdown = TIME_COUNT;
+                    //this.word_num = 1;
+                    //this.own_score +=10;
+                    //this.word = tstData.words[this.word_num].word;
+                    //this.answer = Object.assign([], this.answer, tstData.words[this.word_num].chinese);
                 }
             }
         },
+        computed: mapState({
+            own_score       : state => state.own.score,
+            own_name        : state => state.own.name,
+            word_num        : state => state.question_num,
+            question_amount : state => state.question_amount,
+            other_name      : state => state.other.name,
+            other_score     : state => state.other.score,
+            word            : state => state.word.word,
+            answer          : state => state.word.chinese
+        }),
         mounted() {
-            //this.initWebSocket();
 
             setInterval(()=>{
                 this.time_countdown--;
+                this.$store.state.own.score++;
             }, 1000)
 
         },
@@ -74,7 +74,7 @@ div {
 }
 
 #own {
-     float:left;
+    float:left;
 }
 
 #question {

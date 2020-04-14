@@ -11,9 +11,8 @@ class WebScoket {
     }
     connect(){
         this.vm.$connect();
-        console.log('connected');
-        console.log(this.vm);
         this.vm.$options.sockets.onmessage = this.onReceive;
+        console.log('connected');
     }
     disconnect(){
         this.vm.$disconnect();
