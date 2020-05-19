@@ -9,16 +9,18 @@ import WS from "./api/WebSocket.js";
 
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
-import Index from './components/Index.vue';
-import Login from './components/login.vue';
-import WordsCraft from './components/WordsCraft.vue';
 import WebSocketTest from "./components/WebSocketTest.vue";
+import Index from './components/Index.vue';
+import Login from './components/Login.vue';
+import WordsCraft from './components/WordsCraft.vue';
+import EnterGame from "./components/EnterGame.vue";
 
 const router = new VueRouter({
     routes:[
         { path: '/', component: Index},
         { path: '/login/', component: Login},
         { path: '/game/', component: WordsCraft},
+        { path: '/enter_game/', component: EnterGame},
         { path: '/test/', component: WebSocketTest}
     ]
 })
@@ -32,7 +34,8 @@ let vm = new Vue({
     },
     mounted: function(){
         this.ws = new WS(this);
+        this.ws.connect();
     }
 }).$mount('#app')
 
-console.log(vm);
+console.log('main.js', vm);

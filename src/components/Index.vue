@@ -1,6 +1,6 @@
 <template>
     <div id='index'>
-        <router-link to='/game/'><div id="enter_name">进入游戏</div></router-link>
+        <router-link to='/enter_game/'><div id="enter_name">进入游戏</div></router-link>
     </div>
 </template>
 
@@ -8,6 +8,11 @@
     export default{
         name: 'Index',
         methods: {
+        },
+        mounted() {
+            if (this.$store.state.is_on == false){
+                this.$router.push("/login/");
+            }
         }
     }
 </script>

@@ -1,8 +1,10 @@
 <template>
   <div id="app">
-      <router-link to='/game/'>WordsCraft</router-link><br/>
-      <router-link to='/test/'>WebSocketTest</router-link>
-      <router-link to='/login/'>Login</router-link>
+      <p><router-link to='/'>/</router-link></p>
+      <p><router-link to='/enter_game/'>EnterGame</router-link></p>
+      <p><router-link to='/game/'>WordsCraft</router-link></p>
+      <p><router-link to='/test/'>WebSocketTest</router-link></p>
+      <p><router-link to='/login/'>Login</router-link></p>
       <router-view></router-view>
       <!--
       <WordsCraft ></WordsCraft>

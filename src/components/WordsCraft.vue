@@ -15,6 +15,7 @@
             <div id="other_name"           > {{ other_name           }} </div >
             <div id="other_score"          > {{ other_score          }} </div >
         </div>
+        <RoundResult ref="RoundResult"></RoundResult>
     </div>
 
 
@@ -22,45 +23,60 @@
 
 <script>
 
+    import api from "../api/api.js";
     import { mapState } from "vuex";
+    import RoundResult from "./RoundResult.vue";
 
     const TIME_COUNT = 10;
-    
+    var timer = null;
     export default{
         name: 'WordsCraft',
+        components: {
+            RoundResult,
+        },
         data() {
             return {
                 time_countdown: TIME_COUNT,
             }
         },
         methods: {
+            startTimer(){
+                timer = setInterval(()=>{
+                    this.time_countdown--;
+                    this.$store.state.own.score++;
+                    if (this.time_countdown <= 0) {
+                        clearInterval(timer);
+                        this.timeout();
+                    }
+                }, 1000)
+            },
+            timeout(){
+                this.clickAnswer(-1);
+            },
             clickAnswer(answer_num){
-                if (answer_num == 0){
-                    //this.time_countdown = TIME_COUNT;
-                    //this.word_num = 1;
-                    //this.own_score +=10;
-                    //this.word = tstData.words[this.word_num].word;
-                    //this.answer = Object.assign([], this.answer, tstData.words[this.word_num].chinese);
-                }
+                clearInterval(timer);
+                api.commitAnswer(this.$root, ()=>{
+                    this.$refs.RoundResult.showResult();
+                    this.$once("restartWordsCraft", ()=>{
+                        this.time_countdown = TIME_COUNT;
+                        this.startTimer();
+                    })
+                }, String(answer_num), String(TIME_COUNT-this.time_countdown))
+                this.$refs.RoundResult.open();
             }
         },
         computed: mapState({
-            own_score       : state => state.own.score,
+            own_score       : state => state.own_score,
             own_name        : state => state.own.name,
             word_num        : state => state.question_num,
             question_amount : state => state.question_amount,
             other_name      : state => state.other.name,
-            other_score     : state => state.other.score,
+            other_score     : state => state.other_score,
             word            : state => state.word.word,
             answer          : state => state.word.chinese
         }),
         mounted() {
-
-            setInterval(()=>{
-                this.time_countdown--;
-                this.$store.state.own.score++;
-            }, 1000)
-
+            this.startTimer();
         },
         props: {
         }
